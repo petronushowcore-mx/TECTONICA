@@ -1,0 +1,6 @@
+[submodule "layers/XIV"]
+	path = layers/XIV
+	url = https://github.com/petronushowcore-mx/NC2.5-ONTOSigma-XIV-Cross-Layer-Forgetful-Separation-corpus.git
+[submodule "layers/XV"]
+	path = layers/XV
+	url = https://github.com/petronushowcore-mx/NC2.5-ONTOSigma-XV-Spin-Channel-and-Nestability-corpus.git
