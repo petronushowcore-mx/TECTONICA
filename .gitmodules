@@ -4,3 +4,6 @@
 [submodule "layers/XV"]
 	path = layers/XV
 	url = https://github.com/petronushowcore-mx/NC2.5-ONTOSigma-XV-Spin-Channel-and-Nestability-corpus.git
+[submodule "layers/Identity"]
+	path = layers/Identity
+	url = https://github.com/petronushowcore-mx/Identity-Does-Not-Drift.git
