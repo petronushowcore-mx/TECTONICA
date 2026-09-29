@@ -1,4 +1,4 @@
-"""Run the XIV/XV construction from the dependency commits recorded in HEAD."""
+"""Run the XIV/XV and Identity connections from dependency commits recorded in HEAD."""
 import argparse
 import os
 from pathlib import Path
@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent
-LAYERS = ("XIV", "XV")
+LAYERS = ("XIV", "XV", "Identity")
 
 
 class Refusal(Exception):
@@ -55,6 +55,9 @@ def checked_layers(root):
         selected[name] = (directory, expected)
     if not (selected["XV"][0] / "harness/xiv_stitch.py").is_file():
         raise Refusal("RUNNER_MISSING: XV")
+    for source in ("switch_transport.py", "emergence_verify.py", "emergence_certificate.json"):
+        if not (selected["Identity"][0] / "harness" / source).is_file():
+            raise Refusal("SOURCE_MISSING: Identity/" + source)
     return selected
 
 
@@ -71,10 +74,17 @@ def main(argv=None):
         command = [sys.executable, "-B"]
         if sys.flags.optimize:
             command.append("-" + "O" * sys.flags.optimize)
-        command += [str(selected["XV"][0] / "harness/xiv_stitch.py"),
-                    "--xiv-root", str(selected["XIV"][0]), "--teeth"]
+        commands = [
+            command + [str(selected["XV"][0] / "harness/xiv_stitch.py"),
+                       "--xiv-root", str(selected["XIV"][0]), "--teeth"],
+            command + [str(ROOT / "identity_stitch.py")],
+        ]
         environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
-        return subprocess.run(command, cwd=ROOT, env=environment, check=False).returncode
+        for child in commands:
+            result = subprocess.run(child, cwd=ROOT, env=environment, check=False)
+            if result.returncode:
+                return result.returncode
+        return 0
     except (Refusal, OSError) as exc:
         print("TECTONICA: REFUSED " + str(exc), file=sys.stderr)
         return 2
