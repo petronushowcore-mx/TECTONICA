@@ -7,3 +7,6 @@
 [submodule "layers/Identity"]
 	path = layers/Identity
 	url = https://github.com/petronushowcore-mx/Identity-Does-Not-Drift.git
+[submodule "layers/PoA"]
+	path = layers/PoA
+	url = https://github.com/petronushowcore-mx/physics-of-abstraction.git
