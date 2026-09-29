@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/layers.gif" alt="Animated illustrative connection between ONTOΣ XIV and XV, with further publication layers shown as future additions." width="1200">
+  <img src="assets/layers.gif" alt="Animated XIV/XV construction with Identity witness transport shown as a violet thread across the two planes, with future publication layers above." width="1200">
 </p>
 
 <p align="center">
@@ -16,8 +16,9 @@ Identity Does Not Drift. It combines finite Independent Exhaustion, graph
 transport and the history of channel switching. Further publication layers can
 be added through explicit connections.
 
-The animation above illustrates the original XIV/XV connection. The Identity
-connection is specified and exercised below; it is not depicted in that image.
+The animation illustrates the XIV/XV construction with Identity's witness
+transport shown as a violet thread across the two planes. The underlying
+connections and their limits are specified below.
 
 ## Scope and limits
 
