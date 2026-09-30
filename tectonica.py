@@ -1,4 +1,4 @@
-"""Run the XIV/XV and Identity connections from dependency commits recorded in HEAD."""
+"""Run the XIV/XV, Identity and PoA connections from dependency commits recorded in HEAD."""
 import argparse
 import os
 from pathlib import Path
@@ -7,22 +7,29 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent
-LAYERS = ("XIV", "XV", "Identity")
+LAYERS = ("XIV", "XV", "Identity", "PoA")
 
 
 class Refusal(Exception):
     pass
 
 
-def git(root, *args):
+def git_bytes(root, *args):
+    environment = {key: value for key, value in os.environ.items()
+                   if not key.upper().startswith("GIT_")}
     try:
-        result = subprocess.run(["git", "--no-optional-locks", "-C", str(root), *args],
-                                capture_output=True, text=True, encoding="utf-8")
+        result = subprocess.run(["git", "--no-lazy-fetch", "--no-replace-objects", "--no-optional-locks",
+                                 "-C", str(root), *args], capture_output=True, env=environment)
     except OSError as exc:
         raise Refusal("GIT_UNAVAILABLE") from exc
     if result.returncode:
-        raise Refusal("GIT_FAILED: " + str(root) + ": " + result.stderr.strip())
-    return result.stdout.rstrip("\r\n")
+        raise Refusal("GIT_FAILED: " + str(root) + ": " +
+                      result.stderr.decode("utf-8", errors="replace").strip())
+    return result.stdout
+
+
+def git(root, *args):
+    return git_bytes(root, *args).decode("utf-8").rstrip("\r\n")
 
 
 def checked_layers(root):
@@ -58,6 +65,8 @@ def checked_layers(root):
     for source in ("switch_transport.py", "emergence_verify.py", "emergence_certificate.json"):
         if not (selected["Identity"][0] / "harness" / source).is_file():
             raise Refusal("SOURCE_MISSING: Identity/" + source)
+    if not (selected["PoA"][0] / "harness/seam_audit.py").is_file():
+        raise Refusal("SOURCE_MISSING: PoA/seam_audit.py")
     return selected
 
 
@@ -75,9 +84,9 @@ def main(argv=None):
         if sys.flags.optimize:
             command.append("-" + "O" * sys.flags.optimize)
         commands = [
-            command + [str(selected["XV"][0] / "harness/xiv_stitch.py"),
-                       "--xiv-root", str(selected["XIV"][0]), "--teeth"],
+            command + [str(ROOT / "pinned_sources.py")],
             command + [str(ROOT / "identity_stitch.py")],
+            command + [str(ROOT / "poa_stitch.py")],
         ]
         environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
         for child in commands:

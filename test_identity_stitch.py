@@ -3,6 +3,7 @@ from copy import deepcopy
 from fractions import Fraction as F
 import hashlib
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -83,11 +84,25 @@ class ConnectionTests(unittest.TestCase):
             app.verify_certificate(self.data.replay, bad)
         app.verify_certificate(self.data.replay, self.data.certificate)
 
+    def test_import_after_pin_check(self):
+        with tempfile.TemporaryDirectory(prefix="tectonica-identity-import-") as directory:
+            root = Path(directory)
+            path = root / "layers/XV/harness/xiv_stitch.py"
+            path.parent.mkdir(parents=True)
+            executed = root / "import-executed"
+            path.write_text("from pathlib import Path\n"
+                            + "Path(" + repr(str(executed)) + ").touch()\n"
+                            + "raise AssertionError('I_IMPORT_BEFORE_PINS')\n", encoding="utf-8")
+            with patch.object(app.tectonica, "checked_layers", side_effect=app.tectonica.Refusal("PIN_TEST")):
+                with self.assertRaisesRegex(app.tectonica.Refusal, "^PIN_TEST$"):
+                    app.load_sources(root)
+            self.assertFalse(executed.exists(), "I_IMPORT_BEFORE_PINS")
+
     def test_provenance_binds_loaded_files(self):
         for name in ('xiv_stitch', 'identity_transport', 'identity_replay', 'identity_certificate'):
             record = self.data.provenance[name]
             self.assertEqual(record['sha256'], hashlib.sha256(Path(record['path']).read_bytes()).hexdigest())
-        self.assertEqual(set(self.data.commits), {'XIV', 'XV', 'Identity'})
+        self.assertEqual(set(self.data.commits), {'XIV', 'XV', 'Identity', 'PoA'})
 
     def test_wrong_cycle_in_period_kernel(self):
         original = self.data.api.graph.induced_pushforward

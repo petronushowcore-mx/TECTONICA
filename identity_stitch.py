@@ -9,9 +9,10 @@ import hashlib
 import json
 from pathlib import Path
 import sys
-from types import ModuleType, SimpleNamespace
+from types import SimpleNamespace
 
 import tectonica
+import pinned_sources
 
 
 class Refusal(Exception):
@@ -26,21 +27,18 @@ def require(condition, marker):
 def load_sources(root):
     """Check all dependency pins before executing any dependency module."""
     selected = tectonica.checked_layers(root)
-    xiv, xv, identity_root = [selected[name][0] for name in tectonica.LAYERS]
+    xiv, xv, identity_root = [selected[name][0] for name in ('XIV', 'XV', 'Identity')]
     path = xv / 'harness/xiv_stitch.py'
-    body = path.read_bytes()
-    stitch = ModuleType('_tectonica_xiv_stitch')
-    stitch.__file__ = str(path)
-    exec(compile(body, str(path), 'exec'), stitch.__dict__)
+    stitch = pinned_sources.load_xiv_stitch(selected)
     api = stitch.load_sources(xiv, xv)
     identity = stitch._load('tectonica_identity_transport', identity_root / 'harness/switch_transport.py')
     replay = stitch._load('tectonica_identity_replay', identity_root / 'harness/emergence_verify.py')
     provenance = dict(api.provenance)
-    provenance['xiv_stitch'] = {'path': str(path), 'sha256': hashlib.sha256(body).hexdigest()}
+    provenance['xiv_stitch'] = {'path': str(path), 'sha256': stitch._xiv_stitch_source_sha256}
     for name, module in [('identity_transport', identity), ('identity_replay', replay)]:
         provenance[name] = {'path': module.__file__, 'sha256': module._xiv_stitch_source_sha256}
     certificate_path = identity_root / 'harness/emergence_certificate.json'
-    certificate_bytes = certificate_path.read_bytes()
+    certificate_bytes = pinned_sources.read_pinned(selected, certificate_path)
     certificate = json.loads(certificate_bytes.decode('utf-8'))
     verify_certificate(replay, certificate)
     provenance['identity_certificate'] = {'path': str(certificate_path),
