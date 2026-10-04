@@ -1,4 +1,4 @@
-"""Run the XIV/XV, Identity and PoA connections from dependency commits recorded in HEAD."""
+"""Run pinned XIV/XV, Identity, PoA, boundary recomposition and finite Severance connections."""
 import argparse
 import os
 from pathlib import Path
@@ -87,6 +87,8 @@ def main(argv=None):
             command + [str(ROOT / "pinned_sources.py")],
             command + [str(ROOT / "identity_stitch.py")],
             command + [str(ROOT / "poa_stitch.py")],
+            command + [str(ROOT / "recomposition_stitch.py")],
+            command + [str(ROOT / "severance_stitch.py"), "--teeth"],
         ]
         environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
         for child in commands:

@@ -28,8 +28,18 @@ carrier. It is separate from viability, a selected cycle's pairing and identity
 of a physical system. Its observation conclusions are relative to the declared
 27-history catalogue and named projections. The full output is richer than those
 projections. The composition does not enforce a process, API or security boundary
-between an acting caller and the observation functions. It does not instantiate
-PoA's scalar integer-defect model or compute entropy.
+between an acting caller and the observation functions. The PoA audit does not
+instantiate PoA's scalar integer-defect model or compute entropy.
+
+Finite boundary recomposition is a separate endpoint/horizon/budget example.
+Its ordered window spans are auxiliary declared data, not a duration field in
+XIV Sub. A folded macro-edge can retain several windows. This operation does
+not establish a new Identity certificate or compatibility of shared controls.
+
+The finite Severance catalogue is a separate static audit on the same accounting
+carrier. It computes posterior entropy only over its declared finite comparison
+classes. Its deletions are changes to a finite model, not physical deletion or
+preservation of a whole system.
 
 ## Objects and correspondence
 
@@ -176,12 +186,112 @@ full JSON output but are excluded from the two reduced observations. The
 counterexamples establish indistinguishability only under those projections,
 not under the full output or an unspecified larger history class.
 
+## Boundary recomposition with ordered windows
+
+`recomposition_stitch.py` loads the same four pinned sources through the PoA
+adapter, then constructs an accounting path with four windows of cost `1/3`
+and capacity `2`. Its states, full edge set and costs come from the actual
+converted XIV substrate. Each original edge carries one declared unit span.
+
+The endpoint predicate asks for a route from `0` to `4`, of declared span at
+most `4`, with total burden strictly below `2`. A cut removes the interior state
+of the chain `1 -> 2 -> 3` and refuses undeclared contacts. A fold replaces that
+chain by one macro-edge retaining its complete ordered window trace, total
+burden and declared span. A donor uses typed entry/exit ports and a complete,
+injective map with fresh internal states.
+
+| Construction | Complete endpoint route | Burden | Declared span | Requested route IE |
+|---|---|---|---|---|
+| Original | `0,1,2,3,4` | `4/3` | `4` | `m_IE = 0`, 4 traversals |
+| Cut | none | — | — | not requested |
+| Fold | `0,1,3,4` | `4/3` | `4` | `m_IE = 0`, 3 traversals |
+| Cheap donor | `0,1,5,3,4` | `1` | `4` | `m_IE = 0`, 4 traversals |
+| Costly donor | `0,1,5,3,4` | `8/3` | `4` | `UPPER_SUBCRITICAL_REQUIRED` |
+
+The original one-window/one-edge correspondence above applies before folding.
+The folded edge has span `2` and retains two windows, while the lower IE
+capacity counts traversals, giving `3` for the folded route. Neither count is
+continuous physical time. `first_crossing` reports the end of the first
+declared window whose cumulative burden reaches the capacity.
+
+The costly donor has a complete route but fails the strict endpoint budget.
+It still satisfies XV's global nestability predicate through a shorter route;
+the full requested route's refusal is not global non-nestability. The report
+keeps these two answers separate.
+
+A shape observation retains topology, endpoints, horizon and capacity but hides
+weights, spans and window traces. The cheap and costly donors have the same
+shape and opposite endpoint verdicts. PoA therefore returns `insufficient
+observation` on that attained fibre; full-graph observations return `admit` and
+`reject` respectively. Equal total cost and span also fail to determine first
+crossing: windows `(1/3,2/3)` and their reversal cross `1/2` after different
+windows. The final strict-budget predicate is nevertheless determined by the
+total cost. These are two distinct targets.
+
+The chain fold is an explicit finite construction. It preserves the accounting
+trace on that chain; arbitrary graphs, arbitrary gluing, shared-control
+viability and identity of the recomposed carrier are outside this example.
+The original Identity certificate is replayed during loading, but
+`identity_for_new_graph` remains `not_established`. The construction relates to
+[Severance Defect and the Binding Functional](https://doi.org/10.17605/OSF.IO/5VJMR),
+whose coupled-assembly result requires additional conditions. The distinction
+between an aggregate and an ordered trajectory is also discussed in
+[The Thousand-Year Warrior II, or The Person Is Not a Sum](https://doi.org/10.17605/OSF.IO/MJPDX);
+that essay is not a physical-duration theorem.
+
+## Finite Severance catalogue
+
+`severance_stitch.py` implements a scoped finite instance of
+[Severance Defect and the Binding Functional](https://doi.org/10.17605/OSF.IO/5VJMR),
+Definitions 2.2, 3.1 and 3.3 and Proposition 3.4. It imports the same checked
+Identity and PoA sources; the source verifier remains a separate toy certificate.
+The adapter constructs canonical presentations with fields `states`, `edges`,
+`admissible`, `phi` and `capacity`. Its `phi` table retains exact costs for the
+supplied admitted paths; it does not retain the substrate's entire Phi function.
+
+Operational comparison is declared only for the canonical complete
+`Presentation` catalogue constructed by `fixture`, separately for each audit.
+Two represented presentations are equivalent iff a bijection of states
+preserves directed edges, the supplied admissible paths, every exact cost in
+the supplied phi table, capacity C, and the marked source and endpoint for P.
+The full-path criterion marks 0 -> 4; the separate prefix criterion marks
+0 -> 2. The phi table contains costs of supplied admitted paths, not the
+substrate's entire Phi function. In this catalogue all non-capacity fields
+have the same canonical representation and C is 1, 2 or 3. Equal C selects
+the same represented presentation; different C precludes equivalence, so
+C comparison decides equivalence on each declared catalogue. Tuple equality
+is used on these canonical values; reordered or relabelled variants are not
+additional inputs. q, e, P, entropy and reconstruction concern only this
+fixed catalogue and its declared model deletions. No canonical quotient of
+arbitrary substrates or whole NC systems, physical deletion or physical
+reconstruction is established.
+
+The capacity classes are C1/C2 and C2/C3 on the same accounting path, with
+four supplied window costs of 1/3. Capacity hiding removes C from the represented
+observation; budget-decision availability asks whether all compatible completions
+have the same strict-budget answer. It does not mean that answer is positive.
+Directed-edge deletion changes the represented edge set and filters admitted
+paths and their stored costs. The separate reachability criteria retain their
+marked source and endpoint. These are deletions in a finite model.
+
+The functional defect concerns P(e(S)); the PoA observation decision concerns
+P on original complete presentations. Point posterior entropy and its prior-
+weighted mean are distinct outputs. Reconstruction is an inverse on the entire
+declared finite catalogue when every observation fibre is a singleton; it does
+not reconstruct an unknown graph or execute a physical repair. Selected Identity
+witness preservation remains a separate output, not a whole-system identity claim.
+
 ## Execution and evidence
 
 `python -B tectonica.py` first validates all four dependency gitlinks against
-HEAD and their clean checkouts, then runs three children: `pinned_sources.py`
+HEAD and their clean checkouts, then runs five children: `pinned_sources.py`
 executes the existing XIV/XV construction and its controls, followed by
-`identity_stitch.py` and `poa_stitch.py`.
+`identity_stitch.py`, `poa_stitch.py`, `recomposition_stitch.py` and
+`severance_stitch.py --teeth`. The fourth child executes its 16 checks before
+printing its report; the fifth runs eleven finite Severance checks. Both
+children also refuse when the number of checks actually executed differs from
+the declared count. A standalone `python -B severance_stitch.py` prints the
+finite profiles.
 The first failed child stops the launch and its nonzero status is returned.
 `--check-only` checks dependency pins, cleanliness and required entry files;
 it does not run certificate replay or the mathematical checks. Each standalone
@@ -206,7 +316,7 @@ promised objects are refused without retrieval. These checks bind dependency
 inputs to selected commits; they do not provide process
 isolation against an actor controlling the trusted runtime.
 
-`python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch`
+`python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch`
 runs launch fixtures, temporary Git source-binding fixtures and checks with
 the actual pinned dependencies. Source-binding checks cover changed buffers,
 captured commits, line endings, module reuse, failed imports and refusal of a
@@ -215,10 +325,29 @@ checks include corruptions of cycle transport, composition, period traces,
 survival flags, verdict labels and accounting prefixes, plus a cancelling-path
 positive control. PoA checks include both covector basis coordinates, rejection
 of an incomplete graph map, path-backtracking invariance, literal counterexample
-values, the exact projections and all three fibre decisions. These tests are
+values, the exact projections and all three fibre decisions. The recomposition
+tests check the boundary adapter's source-edge, source-vertex, cost and capacity
+contracts on substituted carriers; the pinned carrier itself is read by the
+launcher's fourth child. These tests are
 distinct from the upstream repositories' own complete suites. Longer user
 schedules can make the imported finite IE enumeration expensive; the default
 examples are deliberately small. No arbitrary schedule-input CLI is provided.
+
+`python -B break_recomposition_stitch.py` runs 34 copied model mutations and
+controls against the finite recomposition adapter, once normally and once with
+`-O`. Each negative case requires its expected first named failure. The
+literal-assignment reordering control must preserve all checks, the reach
+control must reach the changed line, and deleting one named check must be
+refused by the executed-count check. Mutation anchors are tied to this adapter
+version. These cases test the finite model and its refusals, not a general
+composition theorem or a new Identity witness.
+
+`python -B break_severance_stitch.py` runs 14 copied model mutations and
+controls against the finite Severance adapter, normally and with `-O`. Eleven
+cases require their expected first named failure; the reordering control must
+preserve all checks, the start-vertex control must reach the edge-loss check,
+and deleting one named check must be refused by the executed-count check. These
+cases test the declared finite catalogue, not a general deletion theorem.
 
 ## Sources
 
@@ -234,5 +363,11 @@ examples are deliberately small. No arbitrary schedule-input CLI is provided.
   Section 10.1 gives the protected-covector connection; §10.5 separates
   persistence from viability. The physical correspondence obligations in §7.2
   and the informational-only boundary in §12.7 remain outside this composition.
+- [Severance Defect and the Binding Functional](https://doi.org/10.17605/OSF.IO/5VJMR):
+  Definitions 2.2, 3.1 and 3.3 and Proposition 3.4 in the finite catalogue; its
+  own source verifier remains a separate toy certificate.
+- [The Thousand-Year Warrior II, or The Person Is Not a Sum](https://doi.org/10.17605/OSF.IO/MJPDX):
+  the distinction between an aggregate and an ordered trajectory, cited for the
+  ordered window trace; it is an essay, not a physical-duration theorem.
 
 The deposited scientific files and previous release tags are preserved.

@@ -155,10 +155,35 @@ class LaunchTests(unittest.TestCase):
             self.assertEqual([arg for arg in third.args[0] if arg in ("-O", "-OO")], expected, "T_POA_OPTIMIZATION")
             self.assertEqual(third.kwargs["env"]["PYTHONDONTWRITEBYTECODE"], "1", "T_POA_BYTECODE_ENV")
             run.reset_mock()
-            run.side_effect = [subprocess.CompletedProcess([], 0)] * 3
+            run.side_effect = [subprocess.CompletedProcess([], 0)] * 3 + [subprocess.CompletedProcess([], 11)]
+            with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(app.main([]), 11, "T_RECOMPOSITION_CHILD_STATUS")
+            self.assertEqual(run.call_count, 4, "T_RECOMPOSITION_RUN")
+            fourth = run.call_args_list[3]
+            self.assertEqual(fourth.args[0][-1], str(self.root / "recomposition_stitch.py"), "T_RECOMPOSITION_COMMAND")
+            self.assertIn("-B", fourth.args[0], "T_RECOMPOSITION_BYTECODE")
+            self.assertEqual([arg for arg in fourth.args[0] if arg in ("-O", "-OO")], expected, "T_RECOMPOSITION_OPTIMIZATION")
+            self.assertEqual(fourth.kwargs["env"]["PYTHONDONTWRITEBYTECODE"], "1", "T_RECOMPOSITION_BYTECODE_ENV")
+            run.reset_mock()
+            run.side_effect = [subprocess.CompletedProcess([], 0)] * 5
             with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
                 self.assertEqual(app.main([]), 0, "T_ALL_CHILDREN_PASS")
-            self.assertEqual(run.call_count, 3, "T_ALL_CHILDREN_RUN")
+            self.assertEqual(run.call_count, 5, "T_ALL_CHILDREN_RUN")
+            fifth = run.call_args_list[4]
+            self.assertEqual(fifth.args[0][-2:],
+                             [str(self.root / "severance_stitch.py"), "--teeth"], "T_SEVERANCE_COMMAND")
+            self.assertEqual(fifth.args[0][0], app.sys.executable, "T_SEVERANCE_PYTHON")
+            self.assertIn("-B", fifth.args[0], "T_SEVERANCE_BYTECODE")
+            self.assertEqual([arg for arg in fifth.args[0] if arg in ("-O", "-OO")],
+                             expected, "T_SEVERANCE_OPTIMIZATION")
+            self.assertEqual(fifth.kwargs["cwd"], self.root, "T_SEVERANCE_CWD")
+            self.assertEqual(fifth.kwargs["env"]["PYTHONDONTWRITEBYTECODE"], "1",
+                             "T_SEVERANCE_BYTECODE_ENV")
+            run.reset_mock()
+            run.side_effect = [subprocess.CompletedProcess([], 0)] * 4 + [subprocess.CompletedProcess([], 13), subprocess.CompletedProcess([], 0)]
+            with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(app.main([]), 13, "T_SEVERANCE_CHILD_STATUS")
+            self.assertEqual(run.call_count, 5, "T_STOP_AFTER_FAILED_SEVERANCE")
             for name in ("XIV", "XV", "Identity", "PoA"):
                 run.reset_mock()
                 key = (self.root / "layers" / name, ("rev-parse", "HEAD"))
