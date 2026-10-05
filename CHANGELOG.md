@@ -6,6 +6,18 @@ executes. The last number grows with every release while that count stays the
 same, including releases that move a pinned commit, and starts again at `01`
 when the count changes.
 
+## v00.06.01
+
+- The Person Is Not a Sum is added as a fifth pinned repository.
+  `person_stitch.py` projects selected complete recomposition routes into its
+  exact window API and reports capacity, every prefix budget, final and whole
+  survival, and the first crossing's index and declared coordinate.
+- The current composition connects six published works and runs six launcher
+  children. The Person child runs eight explicit checks; twelve copied adapter
+  mutations verify their named first failures in both normal Python and `-O`.
+- Dependency fixtures include Person, and source-buffer tests cover its verified
+  bytes, one-read execution, module conflicts and child refusal status.
+
 ## v00.05.01
 
 Five published works are connected. Four are pinned layers: ONTOΣ XIV, ONTOΣ

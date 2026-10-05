@@ -102,7 +102,7 @@ class ConnectionTests(unittest.TestCase):
         for name in ('xiv_stitch', 'identity_transport', 'identity_replay', 'identity_certificate'):
             record = self.data.provenance[name]
             self.assertEqual(record['sha256'], hashlib.sha256(Path(record['path']).read_bytes()).hexdigest())
-        self.assertEqual(set(self.data.commits), {'XIV', 'XV', 'Identity', 'PoA'})
+        self.assertEqual(set(self.data.commits), {'XIV', 'XV', 'Identity', 'PoA', 'Person'})
 
     def test_wrong_cycle_in_period_kernel(self):
         original = self.data.api.graph.induced_pushforward

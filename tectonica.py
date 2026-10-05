@@ -1,4 +1,4 @@
-"""Run pinned XIV/XV, Identity, PoA, boundary recomposition and finite Severance connections."""
+"""Run pinned XIV/XV, Identity, PoA, recomposition, Severance and Person connections."""
 import argparse
 import os
 from pathlib import Path
@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent
-LAYERS = ("XIV", "XV", "Identity", "PoA")
+LAYERS = ("XIV", "XV", "Identity", "PoA", "Person")
 
 
 class Refusal(Exception):
@@ -67,6 +67,8 @@ def checked_layers(root):
             raise Refusal("SOURCE_MISSING: Identity/" + source)
     if not (selected["PoA"][0] / "harness/seam_audit.py").is_file():
         raise Refusal("SOURCE_MISSING: PoA/seam_audit.py")
+    if not (selected["Person"][0] / "person_harness.py").is_file():
+        raise Refusal("SOURCE_MISSING: Person/person_harness.py")
     return selected
 
 
@@ -89,6 +91,7 @@ def main(argv=None):
             command + [str(ROOT / "poa_stitch.py")],
             command + [str(ROOT / "recomposition_stitch.py")],
             command + [str(ROOT / "severance_stitch.py"), "--teeth"],
+            command + [str(ROOT / "person_stitch.py")],
         ]
         environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
         for child in commands:

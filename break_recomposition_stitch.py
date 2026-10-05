@@ -3,7 +3,7 @@
 Usage: python -B break_recomposition_stitch.py [REPO_ROOT]
 
 REPO_ROOT defaults to this file's directory. It must contain recomposition_stitch.py,
-its root adapters, and the four initialized, clean, pinned TECTONICA dependencies.
+its root adapters, and the five initialized, clean, pinned TECTONICA dependencies.
 Both normal and -O execution are tested. Only temporary model copies are changed.
 The runner's directory must be writable. Run only trusted source and dependencies.
 Mutation anchors describe this adapter version; a changed anchor is refused.

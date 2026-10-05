@@ -16,7 +16,7 @@ class LaunchTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name).resolve()
         self.responses = {(self.root, ("rev-parse", "--show-toplevel")): str(self.root)}
-        for name, revision in [("XIV", "a" * 40), ("XV", "b" * 40), ("Identity", "d" * 40), ("PoA", "e" * 40)]:
+        for name, revision in [("XIV", "a" * 40), ("XV", "b" * 40), ("Identity", "d" * 40), ("PoA", "e" * 40), ("Person", "f" * 40)]:
             directory = self.root / "layers" / name
             directory.mkdir(parents=True)
             self.responses[(self.root, ("ls-tree", "HEAD", "--", "layers/" + name))] = (
@@ -35,6 +35,7 @@ class LaunchTests(unittest.TestCase):
         poa_harness = self.root / "layers/PoA/harness"
         poa_harness.mkdir()
         (poa_harness / "seam_audit.py").write_text("# presence fixture\n", encoding="utf-8")
+        (self.root / "layers/Person/person_harness.py").write_text("# presence fixture\n", encoding="utf-8")
         self.fixture = patch.object(app, "git", side_effect=lambda root, *args: self.responses[(Path(root), args)])
         self.fixture.start()
         self.addCleanup(self.fixture.stop)
@@ -54,14 +55,14 @@ class LaunchTests(unittest.TestCase):
             selected = app.checked_layers(self.root)
         except app.Refusal as exc:
             self.fail("T_HONEST: " + str(exc))
-        self.assertEqual(set(selected), {"XIV", "XV", "Identity", "PoA"}, "T_ALL_LAYERS: four dependencies required")
+        self.assertEqual(set(selected), {"XIV", "XV", "Identity", "PoA", "Person"}, "T_ALL_LAYERS: five dependencies required")
 
     def test_project_root(self):
         self.responses[(self.root, ("rev-parse", "--show-toplevel"))] = str(self.root.parent)
         self.refusal("PROJECT_ROOT_REQUIRED", "T_PROJECT")
 
     def test_pin_records(self):
-        for name in ["XIV", "XV", "Identity", "PoA"]:
+        for name in ["XIV", "XV", "Identity", "PoA", "Person"]:
             key = (self.root, ("ls-tree", "HEAD", "--", "layers/" + name))
             original = self.responses[key]
             for bad in ["", original.replace("160000 commit", "100644 blob"),
@@ -71,7 +72,7 @@ class LaunchTests(unittest.TestCase):
             self.responses[key] = original
 
     def test_01_revision(self):
-        for name in ["XIV", "XV", "Identity", "PoA"]:
+        for name in ["XIV", "XV", "Identity", "PoA", "Person"]:
             key = (self.root / "layers" / name, ("rev-parse", "HEAD"))
             original = self.responses[key]
             self.responses[key] = "c" * 40
@@ -79,7 +80,7 @@ class LaunchTests(unittest.TestCase):
             self.responses[key] = original
 
     def test_dependency_root(self):
-        for name in ["XIV", "XV", "Identity", "PoA"]:
+        for name in ["XIV", "XV", "Identity", "PoA", "Person"]:
             key = (self.root / "layers" / name, ("rev-parse", "--show-toplevel"))
             original = self.responses[key]
             self.responses[key] = str(self.root)
@@ -87,7 +88,7 @@ class LaunchTests(unittest.TestCase):
             self.responses[key] = original
 
     def test_dirty(self):
-        for name in ["XIV", "XV", "Identity", "PoA"]:
+        for name in ["XIV", "XV", "Identity", "PoA", "Person"]:
             key = (self.root / "layers" / name, ("status", "--porcelain=v1", "--untracked-files=all", "--ignored"))
             for dirty in [" M README.md", "?? extra.py", "!! ignored.py"]:
                 self.responses[key] = dirty
@@ -95,7 +96,7 @@ class LaunchTests(unittest.TestCase):
             self.responses[key] = ""
 
     def test_hidden_flags(self):
-        for name in ["XIV", "XV", "Identity", "PoA"]:
+        for name in ["XIV", "XV", "Identity", "PoA", "Person"]:
             key = (self.root / "layers" / name, ("ls-files", "-v", "-z"))
             for flag in ["h", "S", "s"]:
                 self.responses[key] = flag + " README.md\0"
@@ -120,6 +121,12 @@ class LaunchTests(unittest.TestCase):
         path = self.root / "layers/PoA/harness/seam_audit.py"
         path.unlink()
         self.refusal("SOURCE_MISSING: PoA/seam_audit.py", "T_POA_SOURCE")
+
+    def test_person_source(self):
+        path = self.root / "layers/Person/person_harness.py"
+        self.assertTrue(path.is_file(), "T_PERSON_EXISTENCE_CONTROL")
+        path.unlink()
+        self.refusal("SOURCE_MISSING: Person/person_harness.py", "T_PERSON_SOURCE")
 
     def test_launch(self):
         with patch.object(app, "ROOT", self.root), patch.object(app.subprocess, "run") as run:
@@ -165,10 +172,10 @@ class LaunchTests(unittest.TestCase):
             self.assertEqual([arg for arg in fourth.args[0] if arg in ("-O", "-OO")], expected, "T_RECOMPOSITION_OPTIMIZATION")
             self.assertEqual(fourth.kwargs["env"]["PYTHONDONTWRITEBYTECODE"], "1", "T_RECOMPOSITION_BYTECODE_ENV")
             run.reset_mock()
-            run.side_effect = [subprocess.CompletedProcess([], 0)] * 5
+            run.side_effect = [subprocess.CompletedProcess([], 0)] * 6
             with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
                 self.assertEqual(app.main([]), 0, "T_ALL_CHILDREN_PASS")
-            self.assertEqual(run.call_count, 5, "T_ALL_CHILDREN_RUN")
+            self.assertEqual(run.call_count, 6, "T_ALL_CHILDREN_RUN")
             fifth = run.call_args_list[4]
             self.assertEqual(fifth.args[0][-2:],
                              [str(self.root / "severance_stitch.py"), "--teeth"], "T_SEVERANCE_COMMAND")
@@ -184,7 +191,19 @@ class LaunchTests(unittest.TestCase):
             with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
                 self.assertEqual(app.main([]), 13, "T_SEVERANCE_CHILD_STATUS")
             self.assertEqual(run.call_count, 5, "T_STOP_AFTER_FAILED_SEVERANCE")
-            for name in ("XIV", "XV", "Identity", "PoA"):
+            run.reset_mock()
+            run.side_effect = [subprocess.CompletedProcess([], 0)] * 5 + [subprocess.CompletedProcess([], 17)]
+            with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(app.main([]), 17, "T_PERSON_CHILD_STATUS")
+            self.assertEqual(run.call_count, 6, "T_PERSON_RUN")
+            sixth = run.call_args_list[5]
+            self.assertEqual(sixth.args[0][-1], str(self.root / "person_stitch.py"), "T_PERSON_COMMAND")
+            self.assertEqual(sixth.args[0][0], app.sys.executable, "T_PERSON_PYTHON")
+            self.assertIn("-B", sixth.args[0], "T_PERSON_BYTECODE")
+            self.assertEqual([arg for arg in sixth.args[0] if arg in ("-O", "-OO")], expected, "T_PERSON_OPTIMIZATION")
+            self.assertEqual(sixth.kwargs["cwd"], self.root, "T_PERSON_CWD")
+            self.assertEqual(sixth.kwargs["env"]["PYTHONDONTWRITEBYTECODE"], "1", "T_PERSON_BYTECODE_ENV")
+            for name in ("XIV", "XV", "Identity", "PoA", "Person"):
                 run.reset_mock()
                 key = (self.root / "layers" / name, ("rev-parse", "HEAD"))
                 original = self.responses[key]

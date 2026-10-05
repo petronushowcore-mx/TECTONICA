@@ -1,8 +1,8 @@
-# Identity schedules and observations across four layers
+# Identity schedules and observations across five layers
 
 ## Scope and limits
 
-This composition runs exact finite examples from four pinned repositories.
+This composition runs exact finite examples from five pinned repositories.
 Identity supplies a certificate-defined two-loop carrier and event maps; XV
 supplies graph transport and the finite nesting construction; XIV evaluates
 Independent Exhaustion (IE). Physics of Abstraction (PoA) supplies generic
@@ -40,6 +40,13 @@ The finite Severance catalogue is a separate static audit on the same accounting
 carrier. It computes posterior entropy only over its declared finite comparison
 classes. Its deletions are changes to a finite model, not physical deletion or
 preservation of a whole system.
+
+Person’s finite budget functions interpret complete selected routes at fixed
+positive capacity with nonnegative exact costs. Prefix budgets, final survival,
+whole survival and first crossing are separate reports. Final and whole
+survival are equivalent within these assumptions. The supplied integer spans
+are auxiliary coordinates, not physical duration; moral status and whole-system
+identity are not established.
 
 ## Objects and correspondence
 
@@ -188,7 +195,7 @@ not under the full output or an unspecified larger history class.
 
 ## Boundary recomposition with ordered windows
 
-`recomposition_stitch.py` loads the same four pinned sources through the PoA
+`recomposition_stitch.py` loads XIV, XV, Identity and PoA through the PoA
 adapter, then constructs an accounting path with four windows of cost `1/3`
 and capacity `2`. Its states, full edge set and costs come from the actual
 converted XIV substrate. Each original edge carries one declared unit span.
@@ -281,16 +288,61 @@ declared finite catalogue when every observation fibre is a singleton; it does
 not reconstruct an unknown graph or execute a physical repair. Selected Identity
 witness preservation remains a separate output, not a whole-system identity claim.
 
+## Person budgets on selected ordered routes
+
+`person_stitch.py` loads the pinned `person_harness.py` through the same verified
+source-buffer loader used by the existing connections. `person_adapter.py`
+requires a complete selected route from the recomposition graph, flattens its
+edge traces in route order and constructs one `Person.Window(cost, span)` per
+existing window. Costs remain exact nonnegative rational numbers; spans remain
+the supplied positive integers. A folded edge retains its constituent windows.
+These spans are declared coordinates, not measured physical durations.
+
+The capacity is the graph's exact positive rational capacity. For each window,
+the prefix report retains `(capacity - cumulative cost, cumulative span)`,
+including the final prefix. Final survival means that the final budget is
+strictly positive; whole survival means every prefix budget is strictly
+positive. The first crossing is the first budget at or below zero, reported as
+`(one-based window index, cumulative span)`.
+
+At capacity `2`, the existing cases give:
+
+| Case | Ordered costs | Final budget | Final survival | Whole survival | First crossing |
+|---|---|---|---|---|---|
+| Original | `1/3, 1/3, 1/3, 1/3` | `2/3` | true | true | none |
+| Fold | `1/3, 1/3, 1/3, 1/3` | `2/3` | true | true | none |
+| Cheap replacement | `1/3, 1/6, 1/6, 1/3` | `1` | true | true | none |
+| Costly replacement | `1/3, 1, 1, 1/3` | `-2/3` | false | false | `(3, 3)` |
+
+The costly case's complete prefix list is `(5/3, 1), (2/3, 2), (-1/3, 3),
+(-2/3, 4)`. The costly graph itself is not functional. The `branched` graph adds
+a cheap sibling edge `0 -> 4` of cost `1/4`, making that graph functional while
+the selected costly route still crosses the budget boundary and fails whole
+survival. That sibling does not change the costly route's verdict. The cut
+has no complete route and therefore no
+Person trace; the adapter does not substitute an empty trace.
+
+Nonnegative costs make prefix budgets nonincreasing. At fixed capacity, the
+final budget is their minimum, so final and whole survival are equivalent in
+this class. They remain separately named outputs. Order can change the first
+crossing, while positive integer spans change its coordinate: doubling the
+costly case's declared spans gives `(3, 6)` with the same survival verdict.
+Comparison uses the same capacity for both routes and delegates to Person's
+`loss_status`, which requires an admissible surviving baseline. This finite
+connection does not establish moral status, physical duration or whole-system
+identity.
+
 ## Execution and evidence
 
-`python -B tectonica.py` first validates all four dependency gitlinks against
-HEAD and their clean checkouts, then runs five children: `pinned_sources.py`
+`python -B tectonica.py` first validates all five dependency gitlinks against
+HEAD and their clean checkouts, then runs six children: `pinned_sources.py`
 executes the existing XIV/XV construction and its controls, followed by
-`identity_stitch.py`, `poa_stitch.py`, `recomposition_stitch.py` and
-`severance_stitch.py --teeth`. The fourth child executes its 16 checks before
-printing its report; the fifth runs eleven finite Severance checks. Both
-children also refuse when the number of checks actually executed differs from
-the declared count. A standalone `python -B severance_stitch.py` prints the
+`identity_stitch.py`, `poa_stitch.py`, `recomposition_stitch.py`,
+`severance_stitch.py --teeth` and `person_stitch.py`. The fourth child executes its 16 checks before
+printing its report; the fifth runs eleven finite Severance checks; the sixth
+runs eight Person connection checks before reporting selected-route budgets.
+These children also refuse when the number of checks actually executed differs
+from the declared count. A standalone `python -B severance_stitch.py` prints the
 finite profiles.
 The first failed child stops the launch and its nonzero status is returned.
 `--check-only` checks dependency pins, cleanliness and required entry files;
@@ -316,7 +368,7 @@ promised objects are refused without retrieval. These checks bind dependency
 inputs to selected commits; they do not provide process
 isolation against an actor controlling the trusted runtime.
 
-`python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch`
+`python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch`
 runs launch fixtures, temporary Git source-binding fixtures and checks with
 the actual pinned dependencies. Source-binding checks cover changed buffers,
 captured commits, line endings, module reuse, failed imports and refusal of a
@@ -349,6 +401,15 @@ preserve all checks, the start-vertex control must reach the edge-loss check,
 and deleting one named check must be refused by the executed-count check. These
 cases test the declared finite catalogue, not a general deletion theorem.
 
+A negative Person survival verdict is a valid
+scientific result, not an execution error. `test_person_stitch.py` checks the
+real pinned source buffer, exactly one verified read, changed bytes, a foreign
+module cache entry and refusal status. `break_person_stitch.py` makes twelve
+in-memory adapter changes, requires each expected marker to fail first and
+covers all eight connection checks; run it with `python -B` and separately with
+`python -B -O`. The mutations preserve the pinned source files.
+
+
 ## Sources
 
 - [Identity Does Not Drift](https://doi.org/10.17605/OSF.IO/4NMTW): published
@@ -367,7 +428,8 @@ cases test the declared finite catalogue, not a general deletion theorem.
   Definitions 2.2, 3.1 and 3.3 and Proposition 3.4 in the finite catalogue; its
   own source verifier remains a separate toy certificate.
 - [The Thousand-Year Warrior II, or The Person Is Not a Sum](https://doi.org/10.17605/OSF.IO/MJPDX):
-  the distinction between an aggregate and an ordered trajectory, cited for the
-  ordered window trace; it is an essay, not a physical-duration theorem.
+  its pinned companion `person_harness.py` supplies finite prefix budgets,
+  final and whole survival and the first crossing of an ordered window trace.
+  The essay does not establish physical duration or moral status for these graphs.
 
 The deposited scientific files and previous release tags are preserved.

@@ -18,7 +18,7 @@ OBSERVATIONS = ("final_cycle_cost", "period_trace_cost", "period_cost_membership
 
 
 def load_sources(root):
-    """Check all four pins and replay Identity before importing the PoA module."""
+    """Check all declared pins and replay Identity before importing the PoA module."""
     data = identity.load_sources(root)
     path = Path(root) / "layers/PoA/harness/seam_audit.py"
     data.poa = data.stitch._load("tectonica_poa_audit", path)

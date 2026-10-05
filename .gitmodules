@@ -10,3 +10,6 @@
 [submodule "layers/PoA"]
 	path = layers/PoA
 	url = https://github.com/petronushowcore-mx/physics-of-abstraction.git
+[submodule "layers/Person"]
+	path = layers/Person
+	url = https://github.com/petronushowcore-mx/NC25-Person-Is-Not-a-Sum.git

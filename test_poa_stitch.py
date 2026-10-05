@@ -145,7 +145,7 @@ class PoATests(unittest.TestCase):
             poa.audit_observation(api, {}, "final_cycle_cost")
 
     def test_provenance(self):
-        self.assertEqual(set(self.result["commits"]), {"XIV", "XV", "Identity", "PoA"}, "P_PINS")
+        self.assertEqual(set(self.result["commits"]), {"XIV", "XV", "Identity", "PoA", "Person"}, "P_PINS")
         self.assertIn("poa_audit", self.result["source_provenance"], "P_SOURCE")
         record = self.result["source_provenance"]["poa_audit"]
         path = Path(record["path"])
