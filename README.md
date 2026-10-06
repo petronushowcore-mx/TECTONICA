@@ -130,7 +130,10 @@ establish moral status or whole-system identity.
 | [The Physics of Abstraction](https://github.com/petronushowcore-mx/physics-of-abstraction) | Factorisation through observations and three-valued decisions on attained observation fibres. |
 | [Severance Defect and the Binding Functional](https://doi.org/10.17605/OSF.IO/5VJMR) | Finite capacity hiding and directed-edge deletion through the local Severance adapter. |
 | [The Person Is Not a Sum](https://github.com/petronushowcore-mx/NC25-Person-Is-Not-a-Sum) | Exact finite budgets and first crossing on selected ordered window traces. |
+| [Ledger (NC25OL)](https://github.com/petronushowcore-mx/NC25OL) — external module | Associates finite XIV/XV observations with a declared registry record and demonstrates permit-gated local release of their source bundle. |
 | TECTONICA | Selects exact dependency commits, checks the schedule-to-substrate correspondence, audits declared observations of finite switch histories and builds finite recomposition and Severance examples on the pinned accounting carrier, and interprets selected ordered routes through Person’s finite budget API. |
+
+Ledger connects through its [Spectrum observation](https://github.com/petronushowcore-mx/NC25OL/tree/main/examples/spectrum_observation) and [source-release](https://github.com/petronushowcore-mx/NC25OL/tree/main/examples/spectrum_release) examples. These external examples cover the finite XIV/XV composition and keep observation results separate from release authority.
 
 Six published works have executable connections in this composition. Five
 `layers/` entries are Git submodules; Severance uses a local adapter. The five
