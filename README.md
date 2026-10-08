@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/layers.gif" alt="Moving XIV and XV planes with a transverse violet identity witness η, a green PoA observation channel, finite cut-fold-replacement and Severance panels, and an ordered Person budget trace" width="980">
+  <img src="assets/layers.gif" alt="Moving XIV and XV planes with a transverse identity witness η, PoA observation, Common-Control Compatibility and Double Fibre panels, finite recomposition and Severance, and ordered Person budgets" width="980">
 </p>
 
 <p align="center">
@@ -18,10 +18,11 @@
 </p>
 
 Tectonica Spectrum connects independently evolving NC2.5 work through explicit,
-executable finite constructions. Follow a supplied trajectory through nested
+executable constructions. Follow a supplied trajectory through nested
 substrates, transport a selected witness across changing channels, inspect what
 an observation can determine, recompose an accounting route and examine its
-ordered prefix budgets.
+ordered prefix budgets. Compare individual viability with common-control
+compatibility, and inspect verification relative to declared criteria.
 
 | Follow the connection | What is computed |
 |---|---|
@@ -30,18 +31,21 @@ ordered prefix budgets.
 | **Physics of Abstraction** | Whether a declared observation determines the chosen target on its attained fibres. |
 | **Finite recomposition** | Cut, fold and typed replacement on a declared accounting route, retaining its ordered windows. |
 | **Severance** | Capacity hiding and directed-edge deletion, with separate functional and observational outputs. |
+| **Individual Viability Does Not Compose** | Local candidate: three fixed controlled fixtures and a finite observation catalogue. |
+| **The Double Fibre of Verification** | Declared PoA27 worlds, criterion-relative targets and visible-fibre decisions. |
 | **Person** | Exact ordered prefix budgets, final and whole survival, and the first crossing. |
 
 The animation is a construction schematic. Identity's violet **η** travels
 across the two substrate planes; PoA receives a separate observation channel.
-The lower panels illustrate local finite adapters, while Person follows the
-retained ordered windows. *Nothing Is Solid, Part VIII* is the conceptual
+The lower panels show Common-Control Compatibility on three fixed fixtures,
+Double Fibre on declared PoA27 worlds, and finite recomposition and Severance.
+Person follows the retained ordered windows. *Nothing Is Solid, Part VIII* is the conceptual
 companion to Severance in their [shared publication](https://doi.org/10.17605/OSF.IO/5VJMR).
 It contributes no additional executable layer here.
 
 ## Scope and limits
 
-All results concern supplied finite models and declared catalogues. The original
+All results concern supplied models and declared finite catalogues. The original
 XIV/XV input is an admissible, subcritical finite trajectory with at least one
 transition. Its constructed IE witness lies on the nested boundary, `m_IE = 0`.
 Positive-margin robustness, physical hostability, epistemic independence and
@@ -63,6 +67,20 @@ whole survival coincide in this class**. Order can change the first crossing;
 it does not change that final survival verdict. Positive integer spans locate
 declared window ends and establish no physical duration. Moral status and
 whole-system identity are outside this finite budget connection.
+
+The *Individual Viability Does Not Compose* candidate evaluates exactly three
+controlled source fixtures.
+The canonical obstruction covers every admissible measurable control on continuous
+t>=0; the two positive cases have stationary witnesses. Its finite observation
+catalogue is separate from the graph schedule and its integer coordinates.
+The MIT source companion is included in this repository and captured by its
+root commit; this local candidate is prepared for release verification.
+
+Double Fibre uses the fixed PoA27 model with its existing projections. Its
+singleton baseline and separately declared two-criterion comparison concern
+known binary readouts; neither identifies an unknown physical policy. The
+refinement (V,Q) is informational and supplies no physical enforcement,
+viability or whole-system identity guarantee.
 
 <details>
 <summary><strong>Read the exact conditions of each connection</strong></summary>
@@ -130,14 +148,18 @@ establish moral status or whole-system identity.
 | [The Physics of Abstraction](https://github.com/petronushowcore-mx/physics-of-abstraction) | Factorisation through observations and three-valued decisions on attained observation fibres. |
 | [Severance Defect and the Binding Functional](https://doi.org/10.17605/OSF.IO/5VJMR) | Finite capacity hiding and directed-edge deletion through the local Severance adapter. |
 | [The Person Is Not a Sum](https://github.com/petronushowcore-mx/NC25-Person-Is-Not-a-Sum) | Exact finite budgets and first crossing on selected ordered window traces. |
+| [Individual Viability Does Not Compose](https://doi.org/10.17605/OSF.IO/WFBX6) | MIT companion included in this repository: three fixed controlled fixtures and a finite observation catalogue, pinned by the root commit. |
+| [The Double Fibre of Verification](https://github.com/petronushowcore-mx/The-Double-Fibre-of-Verification) | Declared history and criterion worlds, factorisation through retained-D observations and informational refinement. |
 | [Ledger (NC25OL)](https://github.com/petronushowcore-mx/NC25OL) — external module | Associates finite XIV/XV observations with a declared registry record and demonstrates permit-gated local release of their source bundle. |
-| TECTONICA | Selects exact dependency commits, checks the schedule-to-substrate correspondence, audits declared observations of finite switch histories and builds finite recomposition and Severance examples on the pinned accounting carrier, and interprets selected ordered routes through Person’s finite budget API. |
+| TECTONICA | Selects exact dependency commits, checks the schedule-to-substrate correspondence, audits declared observations of finite switch histories and builds finite recomposition and Severance examples on the pinned accounting carrier, interprets selected ordered routes through Person’s finite budget API, compares three controlled fixtures through PoA observation fibres, and evaluates Double Fibre on declared history-and-criterion worlds. |
 
 Ledger connects through its [Spectrum observation](https://github.com/petronushowcore-mx/NC25OL/tree/main/examples/spectrum_observation) and [source-release](https://github.com/petronushowcore-mx/NC25OL/tree/main/examples/spectrum_release) examples. These external examples cover the finite XIV/XV composition and keep observation results separate from release authority.
 
-Six published works have executable connections in this composition. Five
-`layers/` entries are Git submodules; Severance uses a local adapter. The five
-committed gitlinks fix the dependency versions; `.gitmodules` gives their source URLs. Dependencies are not selected from
+This local candidate connects eight source works. Six `layers/` entries are
+Git submodules, while `layers/ProbeVI` is an ordinary tracked MIT source tree
+pinned by the TECTONICA root commit. Severance uses a local adapter.
+The six committed gitlinks fix the external dependency versions; `.gitmodules`
+gives their source URLs. Dependencies are not selected from
 moving branch tips at launch. The original IE adapter remains in XV. This
 repository's `identity_stitch.py` implements the schedule composition;
 `poa_stitch.py` adds the finite observation audit.
@@ -147,22 +169,71 @@ XV, Identity and PoA; it is a local composition adapter, with no separate depend
 same accounting carrier; it is another local adapter, with no new dependency.
 `person_stitch.py` connects these ordered routes to the pinned Person API through
 `person_adapter.py`, which projects the existing windows without inventing new
-spans. All five local adapters import the pinned layer code. After initialising the
+spans. The local adapters import the pinned layer code. After initialising the
 submodules, read `layers/XV/INTEGRATION.md` for the construction and its
 premises, and `layers/XIV/ERRATA.md` and
 `layers/XV/ERRATA.md` for the corrections at those recorded versions.
 The deposited scientific source files and earlier repository history are preserved.
 
-The composition has five pinned repositories under `layers/` and six connected
-published works: the five pinned layers and Severance through its local adapter.
+This candidate has seven source bindings under `layers/`: six external
+repositories and the included Probe VI tree. It connects eight source works,
+including Severance through its local adapter. Double Fibre has its own
+recorded public pin. These changes form a local release candidate.
 Nothing Is Solid is its conceptual companion; the essay has no separate executable connection.
-Five local adapters, `identity_stitch.py`, `poa_stitch.py`,
-`recomposition_stitch.py`, `severance_stitch.py` and `person_stitch.py`, follow
-`pinned_sources.py` as six launcher children.
+Seven local adapters, `identity_stitch.py`, `poa_stitch.py`,
+`recomposition_stitch.py`, `severance_stitch.py`, `person_stitch.py`,
+`common_control_stitch.py` and `double_fibre_stitch.py`, follow
+`pinned_sources.py` as eight launcher children.
+
+## Individual Viability Does Not Compose
+
+**Local candidate: MIT companion included in `layers/ProbeVI`, pinned by the TECTONICA root commit.**
+
+*Individual Viability Does Not Compose* supplies three fixed controlled fixtures: the
+canonical actuator at x_star, that actuator at x3=0, and the aligned actuator
+at x_star. Unsupported data yields NOT_ESTABLISHED before Boolean decisions.
+The target asks whether one admissible measurable control satisfies both
+constraints for every continuous t>=0. The work's canonical proof establishes
+obstruction for all such controls; the two stationary controls supply explicit
+positive witnesses. The strategy label describes the supplied local and
+positive certificates, not a restriction of the negative theorem to constant
+controls. This horizon is unrelated to the accounting graph's coordinates,
+Person's spans or burdens, whole identity or moral status.
+
+Each fixture is indexed by a distinct singleton typed PoA History, with a
+bijection back to the controlled object. This is an index encoding only:
+its loop, zero defect and admitted flag have no physical or control meaning.
+The observation and target are computed from the decoded controlled object,
+never from that synthetic admitted flag.
+
+TECTONICA adds a finite catalogue using PoA's generic fibre_decision and
+factors_through. The target has values false, true, true. The local_viability
+observation records both exact local Boolean readouts. Each readout is computed
+from its constraint's polynomial trajectory coefficients, zero remainder and
+control bounds; for the canonical plant each constraint uses its own supplied
+control. For the stationary cases both use the same constant control. All
+three fixtures have (true,true), whose attained fibre therefore mixes
+compatible and incompatible cases and yields insufficient observation.
+
+The full_profile observation retains exact A, B, H, h, x0, control bounds,
+horizon, declared certificate strategy and supplied controls. It distinguishes
+all three catalogue entries and yields reject, admit, admit. This is
+informational sufficiency by construction, not independent scientific
+evidence or a general theorem about arbitrary plants. The finite catalogue
+and these projections are TECTONICA's construction, not a claim imported from
+*Individual Viability Does Not Compose*. No accounting-graph-to-controlled-plant mapping is introduced.
+
+This candidate includes the MIT companion at `layers/ProbeVI/harness/probe_vi.py`.
+Its source is an ordinary tracked tree pinned by the TECTONICA root commit,
+with six other dependencies pinned by external gitlinks.
+`common_control_stitch.py` is the seventh sequential launcher child. A proved
+canonical obstruction is a successful scientific result and returns zero
+alongside the two positive witnesses. Source refusal or an unestablished
+catalogue entry stops the child.
 
 ## Run
 
-Python 3 and Git with support for `--no-lazy-fetch` are required. Git versions
+Python 3.10 or newer and Git with support for `--no-lazy-fetch` are required. Git versions
 that do not recognise this option are refused. Python dependencies are
 standard-library only.
 Clone this repository and initialise its recorded dependencies:
@@ -176,9 +247,11 @@ python -B tectonica.py
 python -B -O tectonica.py
 ```
 
-The launcher requires each dependency to have the recorded commit and a clean
-working tree, including untracked and ignored files. It refuses index flags that
-hide working files. Use dedicated clean checkouts; keep results outside `layers/`.
+The launcher requires each external dependency to have the recorded commit
+and a clean working tree. Probe VI must be a tracked tree in the root commit;
+its Git root must be TECTONICA, and its own directory must be clean. Both checks
+include untracked and ignored files and refuse index flags that hide working
+files. Root changes outside `layers/ProbeVI` are outside that source check. Use dedicated clean checkouts; keep results outside `layers/`.
 Once the dependencies are present, the launcher does not fetch or update them.
 Missing promised objects are refused without retrieval.
 Run only trusted checkouts: their Python code is executed.
@@ -186,10 +259,10 @@ Run only trusted checkouts: their Python code is executed.
 <details>
 <summary><strong>Reports, source loading and verification commands</strong></summary>
 
-A successful launch prints all five selected commits and runs six children in
+A successful candidate launch prints all seven selected commits and runs eight children in
 order: `pinned_sources.py` runs XV's construction and controls, followed by
 `identity_stitch.py`, `poa_stitch.py`, `recomposition_stitch.py`,
-`severance_stitch.py --teeth` and `person_stitch.py`. The fourth child executes
+`severance_stitch.py --teeth`, `person_stitch.py`, `common_control_stitch.py` and `double_fibre_stitch.py`. The fourth child executes
 16 checks before reporting cut, fold and replacement results; the fifth runs
 eleven finite Severance checks; the sixth runs eight Person connection checks
 and reports each selected route's budgets and survival results. These children
@@ -226,11 +299,12 @@ python -B -m unittest -v test_tectonica
 python -B -O -m unittest -v test_tectonica
 ```
 
-Integration tests require the five initialised, clean dependencies:
+Integration tests require six initialised, clean submodules and the tracked,
+clean `layers/ProbeVI` tree:
 
 ```text
-python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch
-python -B -O -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch
+python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch test_common_control_stitch test_double_fibre_stitch
+python -B -O -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch test_common_control_stitch test_double_fibre_stitch
 ```
 
 The copied recomposition mutations run with:
@@ -288,8 +362,9 @@ Further layers from published NC2.5 works are planned. Each addition requires an
 implemented connection and its compatibility checks before it joins a release.
 
 Each release records one composition of independently versioned layers. Develop
-changes to an existing layer in its own repository, then update its gitlink here
-alongside the connection checks. A new layer brings its own declared inputs,
+changes to an external layer in its own repository, then update its gitlink
+here alongside the connection checks. The included Probe VI companion changes
+through the TECTONICA root commit and retains its own MIT licence. A new layer brings its own declared inputs,
 outputs and conditions of compatibility before joining the composition.
 
 Publish a new release for a changed composition. Keep earlier release tags and
@@ -297,9 +372,11 @@ their recorded layer commits unchanged so that previous compositions can still
 be checked out and reproduced.
 
 Release numbers have the form `vMAJOR.LAYERS.REVISION`, two digits each. The
-middle number counts the published works whose connection the launcher
-executes: five in the released `v00.05.01`, the four pinned layers and
-Severance Defect and the Binding Functional through its local adapter. The last number grows with
+middle number counts the published works whose connection the release launcher
+executes. The released `v00.06.01` connects six works; this candidate adds
+Individual Viability Does Not Compose and The Double Fibre of Verification,
+bringing the connection to eight works. Source bindings and launcher children
+are counted separately above. The last number grows with
 every release while that count stays the same, including releases that move a
 pinned commit, and starts again at `01` when the count changes. The first
 release, `v0.1.0`, predates this numbering.
@@ -312,6 +389,11 @@ Identity Does Not Drift: [10.17605/OSF.IO/4NMTW](https://doi.org/10.17605/OSF.IO
 The Physics of Abstraction: [10.17605/OSF.IO/QJ5BR](https://doi.org/10.17605/OSF.IO/QJ5BR).
 Severance Defect and the Binding Functional: [10.17605/OSF.IO/5VJMR](https://doi.org/10.17605/OSF.IO/5VJMR).
 The Person Is Not a Sum: [10.17605/OSF.IO/MJPDX](https://doi.org/10.17605/OSF.IO/MJPDX).
+Individual Viability Does Not Compose: [10.17605/OSF.IO/WFBX6](https://doi.org/10.17605/OSF.IO/WFBX6)
+(NC2.5 Empirical Probes — Part VI). Its MIT companion is included at
+[`layers/ProbeVI`](layers/ProbeVI/README.md), with its own
+[MIT licence](layers/ProbeVI/LICENSE), and is pinned by the root commit.
+The Double Fibre of Verification: [10.17605/OSF.IO/Z9E5N](https://doi.org/10.17605/OSF.IO/Z9E5N).
 *Nothing Is Solid, Part VIII* shares the Severance DOI as its conceptual
 publication companion. It has no separate executable dependency here.
 These identify the source works, not a separate DOI for TECTONICA.
@@ -319,3 +401,22 @@ Changes between releases are listed in [CHANGELOG.md](CHANGELOG.md).
 
 Copyright (c) 2026 Maksim Barziankou (MxBv), The Urgrund Laboratheory.
 [CC BY-NC-ND 4.0](LICENSE). Contact: research@petronus.eu.
+
+## Double Fibre candidate
+
+The immutable DoubleFibre source is available at `fed7eed1736d29733bdee0b4b000eed2e87d37cd`, with entry `layers/DoubleFibre/harness/double_fibre_audit.py`. The candidate adds `double_fibre_stitch.py` as its eighth sequential child, after common control. Probe VI is included as the ordinary MIT tree `layers/ProbeVI`, pinned by the root commit. These files form a local release candidate. See INTEGRATION.md for the declared model and limits.
+
+The standalone connection checks and in-memory model changes require the same
+installed, pinned dependencies as the adapter:
+
+```text
+python -B test_double_fibre_stitch.py
+python -B -O test_double_fibre_stitch.py
+python -B break_double_fibre_stitch.py
+python -B -O break_double_fibre_stitch.py
+```
+
+The test module runs eight named checks; its two unittest cases check their
+executed count and results. The mutation runner checks eleven changes and
+controls, requires all eight checks to remain present and the expected first
+failure, and writes no files. These commands do not establish physical identity.

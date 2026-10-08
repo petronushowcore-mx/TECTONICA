@@ -1,0 +1,203 @@
+{
+  "checks": [
+    {
+      "evidence": {
+        "kernel_dimensions": [
+          1,
+          1
+        ],
+        "stacked_ranks": [
+          2,
+          2
+        ]
+      },
+      "id": "T1_ASSUMPTIONS",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "trajectory_coefficients": [
+          [
+            [
+              "0",
+              "0",
+              "1"
+            ],
+            [
+              "0",
+              "2",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ]
+          ],
+          [
+            [
+              "0",
+              "0",
+              "1"
+            ],
+            [
+              "2",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ]
+          ]
+        ],
+        "u_1": "-1",
+        "u_2": "1"
+      },
+      "id": "T2_INDIVIDUAL_WITNESSES",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "control_coefficient": "0",
+        "d_dt_x1_plus_x2": "2"
+      },
+      "id": "T3_SUM_RATE",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "constraint_drift_rows": [
+          [
+            "0",
+            "0",
+            "1"
+          ],
+          [
+            "0",
+            "0",
+            "1"
+          ]
+        ],
+        "global_cap": "0",
+        "individual_caps": [
+          "1",
+          "1"
+        ],
+        "input_gains": [
+          "1",
+          "-1"
+        ],
+        "witness_point": [
+          "0",
+          "0",
+          "1"
+        ]
+      },
+      "id": "T4_SET_SEPARATION",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "affine_ranks": [
+          3,
+          3
+        ],
+        "boundary_sample_counts": [
+          4,
+          4
+        ],
+        "tangentiality_point": [
+          "0",
+          "0",
+          "1"
+        ]
+      },
+      "id": "T5_POLYTOPIC_REACH",
+      "status": "PASS"
+    },
+    {
+      "evidence": {
+        "aligned_actuator_shared_u": "1",
+        "x3_zero_probe": [
+          "0",
+          "-1",
+          "0"
+        ],
+        "x3_zero_shared_u": "0"
+      },
+      "id": "T6_NEGATIVE_CONTROLS",
+      "status": "PASS"
+    }
+  ],
+  "claim": "x_star is in A_1 intersection A_2 but not in A",
+  "exact_sets": {
+    "A": "x1 <= 0 and x2 <= 0 and x3 <= 0",
+    "A_1": "x1 <= 0 and x3 <= 1",
+    "A_2": "x2 <= 0 and x3 <= 1"
+  },
+  "fixed_convention": {
+    "U": [
+      "-1",
+      "1"
+    ],
+    "h": [
+      "0",
+      "0"
+    ]
+  },
+  "model": {
+    "A": [
+      [
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "B": [
+      "1",
+      "-1",
+      "0"
+    ],
+    "H": [
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ],
+    "x_star": [
+      "0",
+      "0",
+      "1"
+    ]
+  },
+  "probe": "NC2.5 Empirical Probe VI",
+  "result": "PASS"
+}

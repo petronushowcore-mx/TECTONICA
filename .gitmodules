@@ -13,3 +13,6 @@
 [submodule "layers/Person"]
 	path = layers/Person
 	url = https://github.com/petronushowcore-mx/NC25-Person-Is-Not-a-Sum.git
+[submodule "layers/DoubleFibre"]
+	path = layers/DoubleFibre
+	url = https://github.com/petronushowcore-mx/The-Double-Fibre-of-Verification.git

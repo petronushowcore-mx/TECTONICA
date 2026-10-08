@@ -1,8 +1,12 @@
-# Identity schedules and observations across five layers
+# Identity schedules and observations across seven layers
 
 ## Scope and limits
 
-This composition runs exact finite examples from five pinned repositories.
+This local candidate has seven source bindings: six external repositories
+and the ordinary MIT companion tree `layers/ProbeVI`, pinned by the TECTONICA
+root commit. It combines exact finite graph examples with three fixed
+controlled source fixtures. Their common-control target concerns all continuous
+t>=0 and is independent of graph horizons and declared Person spans.
 Identity supplies a certificate-defined two-loop carrier and event maps; XV
 supplies graph transport and the finite nesting construction; XIV evaluates
 Independent Exhaustion (IE). Physics of Abstraction (PoA) supplies generic
@@ -22,6 +26,11 @@ finite boundary construction with `m_IE = 0`; positive-margin robustness, full
 Regime W, physical hostability, epistemic independence and infinite continuation
 are not established. The original XIV/XV limits and premises remain in
 [layers/XV/INTEGRATION.md](layers/XV/INTEGRATION.md).
+
+For XIV.2, a deployment witness must satisfy the fixed-action matched-localisation
+criterion of the XIV companion §6.7.3. An asymmetric-load IE witness alone does
+not establish that criterion. This finite connection does not execute the
+matched-pair protocol or an adequate physical survey.
 
 The added PoA target is uninterrupted preservation of the fixed covector on this
 carrier. It is separate from viability, a selected cycle's pairing and identity
@@ -332,13 +341,85 @@ Comparison uses the same capacity for both routes and delegates to Person's
 connection does not establish moral status, physical duration or whole-system
 identity.
 
+## Individual Viability Does Not Compose
+
+**Local candidate: MIT companion included in `layers/ProbeVI`, pinned by the TECTONICA root commit.**
+
+*Individual Viability Does Not Compose* supplies three fixed controlled fixtures: the
+canonical actuator at x_star, that actuator at x3=0, and the aligned actuator
+at x_star. Unsupported data yields NOT_ESTABLISHED before Boolean decisions.
+The target asks whether one admissible measurable control satisfies both
+constraints for every continuous t>=0. The work's canonical proof establishes
+obstruction for all such controls; the two stationary controls supply explicit
+positive witnesses. The strategy label describes the supplied local and
+positive certificates, not a restriction of the negative theorem to constant
+controls. This horizon is unrelated to the accounting graph's coordinates,
+Person's spans or burdens, whole identity or moral status.
+
+Each fixture is indexed by a distinct singleton typed PoA History, with a
+bijection back to the controlled object. This is an index encoding only:
+its loop, zero defect and admitted flag have no physical or control meaning.
+The observation and target are computed from the decoded controlled object,
+never from that synthetic admitted flag.
+
+TECTONICA adds a finite catalogue using PoA's generic fibre_decision and
+factors_through. The target has values false, true, true. The local_viability
+observation records both exact local Boolean readouts. Each readout is computed
+from its constraint's polynomial trajectory coefficients, zero remainder and
+control bounds; for the canonical plant each constraint uses its own supplied
+control. For the stationary cases both use the same constant control. All
+three fixtures have (true,true), whose attained fibre therefore mixes
+compatible and incompatible cases and yields insufficient observation.
+
+The full_profile observation retains exact A, B, H, h, x0, control bounds,
+horizon, declared certificate strategy and supplied controls. It distinguishes
+all three catalogue entries and yields reject, admit, admit. This is
+informational sufficiency by construction, not independent scientific
+evidence or a general theorem about arbitrary plants. The finite catalogue
+and these projections are TECTONICA's construction, not a claim imported from
+*Individual Viability Does Not Compose*. No accounting-graph-to-controlled-plant mapping is introduced.
+
+This candidate includes the MIT companion at `layers/ProbeVI/harness/probe_vi.py`.
+Its source is an ordinary tracked tree pinned by the TECTONICA root commit,
+with six other dependencies pinned by external gitlinks.
+`common_control_stitch.py` is the seventh sequential launcher child. A proved
+canonical obstruction is a successful scientific result and returns zero
+alongside the two positive witnesses. Source refusal or an unestablished
+catalogue entry stops the child.
+
+## The Double Fibre of Verification
+
+`double_fibre_stitch.py` imports the generic audit at
+`layers/DoubleFibre/harness/double_fibre_audit.py` through the existing
+captured Git-byte loader. Its public dependency commit is
+`fed7eed1736d29733bdee0b4b000eed2e87d37cd`.
+
+D is the captured PoA27 model, including fixed graph maps, covector,
+accounting protocol and dependency commits. H is the 27 words ABC^3.
+The baseline declares A={uninterrupted}; the separate comparison declares
+A={uninterrupted,composite}, the existing uninterrupted covector membership
+and composite admitted membership readouts. Compatible worlds are the full
+declared product H x A. Both criteria are total binary functions on this
+finite catalogue. Q(D,h,alpha)=alpha(h), and V retains D literally with the
+chosen existing PoA observation. This is a declared criterion family, not
+discovery of an unknown physical policy.
+
+The imported `factors_through`, `double_fibre`, `trichotomy` and
+`least_refinement` compute constancy, attained worlds, admit/reject/insufficient
+observation and the informational refinement (V,Q). Refined sufficiency does
+not establish a means to acquire an unknown Q. Baseline and comparison remain
+separate outputs, with no physical enforcement, viability or whole-system
+identity preservation claim. Insufficient observation is a valid scientific
+result, not a failed child.
+
 ## Execution and evidence
 
-`python -B tectonica.py` first validates all five dependency gitlinks against
-HEAD and their clean checkouts, then runs six children: `pinned_sources.py`
+`python -B tectonica.py` first validates six external dependency gitlinks
+against HEAD and their clean checkouts, plus the ordinary `layers/ProbeVI` tree
+in the root commit and its scoped clean checkout, then runs eight children: `pinned_sources.py`
 executes the existing XIV/XV construction and its controls, followed by
 `identity_stitch.py`, `poa_stitch.py`, `recomposition_stitch.py`,
-`severance_stitch.py --teeth` and `person_stitch.py`. The fourth child executes its 16 checks before
+`severance_stitch.py --teeth`, `person_stitch.py`, `common_control_stitch.py` and `double_fibre_stitch.py`. The fourth child executes its 16 checks before
 printing its report; the fifth runs eleven finite Severance checks; the sixth
 runs eight Person connection checks before reporting selected-route budgets.
 These children also refuse when the number of checks actually executed differs
@@ -368,7 +449,7 @@ promised objects are refused without retrieval. These checks bind dependency
 inputs to selected commits; they do not provide process
 isolation against an actor controlling the trusted runtime.
 
-`python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch`
+`python -B -m unittest -v test_tectonica test_pinned_sources test_identity_stitch test_poa_stitch test_recomposition_stitch test_person_stitch test_common_control_stitch test_double_fibre_stitch`
 runs launch fixtures, temporary Git source-binding fixtures and checks with
 the actual pinned dependencies. Source-binding checks cover changed buffers,
 captured commits, line endings, module reuse, failed imports and refusal of a
@@ -432,4 +513,29 @@ covers all eight connection checks; run it with `python -B` and separately with
   final and whole survival and the first crossing of an ordered window trace.
   The essay does not establish physical duration or moral status for these graphs.
 
+- [Individual Viability Does Not Compose](https://doi.org/10.17605/OSF.IO/WFBX6): NC2.5 Empirical Probes — Part VI.
+  The MIT companion is included at `layers/ProbeVI` and pinned by the TECTONICA
+  root commit. Its source code, tests and certificate retain their exact supplied
+  bytes; its README states the repository location and carries the acknowledgement.
+  The paper has its separate CC BY-NC-ND 4.0 licence and is not copied here.
+
+- [The Double Fibre of Verification](https://doi.org/10.17605/OSF.IO/Z9E5N): section 2, Theorem 3.2 and Proposition 3.4, specialised to declared PoA27 worlds; `harness/double_fibre_audit.py` at the immutable dependency commit.
+
 The deposited scientific files and previous release tags are preserved.
+
+Double Fibre has a public source pin in the recorded gitlink specification.
+Probe VI's included MIT source tree is bound to the root commit. The local
+candidate can therefore be installed with six external submodules and its
+included source; it still requires an actual installed launcher run for release
+verification.
+
+`test_double_fibre_stitch.py` loads installed dependencies through the production
+adapter and runs eight named predicates with independent finite-fibre oracles.
+Its two unittest cases check the executed names/count and all predicate results.
+The standalone CLI returns failure unless exactly eight named checks pass.
+`break_double_fibre_stitch.py` runs eleven in-memory changes and controls,
+requiring the expected first failure and all eight checks to remain present.
+The local-variable rename must preserve the checks; a model-preparation change
+must reach DECLARED_DOMAIN. Both commands support normal Python and `-O`, print
+their results and write no files. They require all installed source bindings;
+a private snapshot exercise does not replace that installation requirement.

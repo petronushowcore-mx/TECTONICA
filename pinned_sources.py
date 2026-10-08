@@ -20,21 +20,26 @@ def read_pinned(selected, path):
     """Read once, compare to the captured commit's blob, return that same buffer."""
     path = Path(path).resolve()
     matches = []
-    for directory, revision in selected.values():
+    for name, (directory, revision) in selected.items():
         directory = Path(directory).resolve()
         try:
             relative = path.relative_to(directory)
         except ValueError:
             continue
         if relative.parts:
-            matches.append((directory, revision, relative.as_posix()))
+            matches.append((name, directory, revision))
     if len(matches) != 1:
         raise tectonica.Refusal("SOURCE_OUTSIDE_PINS: " + str(path))
-    directory, revision, relative = matches[0]
+    name, directory, revision = matches[0]
     if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", revision):
         raise tectonica.Refusal("SOURCE_PIN_INVALID: " + str(path))
+    repository = Path(tectonica.git(directory, "rev-parse", "--show-toplevel")).resolve()
+    if ((name == "ProbeVI" and directory != repository / "layers/ProbeVI")
+            or (name != "ProbeVI" and repository != directory)):
+        raise tectonica.Refusal("SOURCE_ROOT_MISMATCH: " + str(directory))
+    relative = path.relative_to(repository).as_posix()
     actual = path.read_bytes()
-    blob = tectonica.git_bytes(directory, "cat-file", "blob", revision + ":" + relative)
+    blob = tectonica.git_bytes(repository, "cat-file", "blob", revision + ":" + relative)
     crlf = b"\r" not in blob and b"\0" not in blob and actual == blob.replace(b"\n", b"\r\n")
     if actual != blob and not crlf:
         raise tectonica.Refusal("SOURCE_CONTENT_MISMATCH: " + str(path))

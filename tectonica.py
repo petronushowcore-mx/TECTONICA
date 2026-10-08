@@ -1,4 +1,4 @@
-"""Run pinned XIV/XV, Identity, PoA, recomposition, Severance and Person connections."""
+"""Run pinned XIV/XV, Identity, PoA, recomposition, Severance, Person, common-control and Double Fibre connections."""
 import argparse
 import os
 from pathlib import Path
@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent
-LAYERS = ("XIV", "XV", "Identity", "PoA", "Person")
+LAYERS = ("XIV", "XV", "Identity", "PoA", "Person", "ProbeVI", "DoubleFibre")
 
 
 class Refusal(Exception):
@@ -19,6 +19,7 @@ def git_bytes(root, *args):
                    if not key.upper().startswith("GIT_")}
     try:
         result = subprocess.run(["git", "--no-lazy-fetch", "--no-replace-objects", "--no-optional-locks",
+                                 "-c", "core.fsmonitor=false",
                                  "-C", str(root), *args], capture_output=True, env=environment)
     except OSError as exc:
         raise Refusal("GIT_UNAVAILABLE") from exc
@@ -41,22 +42,27 @@ def checked_layers(root):
         relative = "layers/" + name
         record = git(root, "ls-tree", "HEAD", "--", relative)
         parts = record.split()
-        if (len(parts) != 4 or parts[0:2] != ["160000", "commit"]
+        kind = ["040000", "tree"] if name == "ProbeVI" else ["160000", "commit"]
+        if (len(parts) != 4 or parts[0:2] != kind
                 or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", parts[2])
                 or parts[3] != relative):
             raise Refusal("PIN_REQUIRED: " + name)
-        expected = parts[2]
+        expected = git(root, "rev-parse", "HEAD") if name == "ProbeVI" else parts[2]
+        if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", expected):
+            raise Refusal("PIN_REQUIRED: " + name)
         directory = root / relative
+        repository = root if name == "ProbeVI" else directory
+        scope = ["--", relative] if name == "ProbeVI" else []
         if not directory.is_dir():
             raise Refusal("DEPENDENCY_MISSING: " + name)
-        if Path(git(directory, "rev-parse", "--show-toplevel")).resolve() != directory:
+        if Path(git(directory, "rev-parse", "--show-toplevel")).resolve() != repository:
             raise Refusal("DEPENDENCY_ROOT: " + name)
         if git(directory, "rev-parse", "HEAD") != expected:
             raise Refusal("REVISION_MISMATCH: " + name)
-        flags = git(directory, "ls-files", "-v", "-z").split("\0")
+        flags = git(repository, "ls-files", "-v", "-z", *scope).split("\0")
         if any(row[:1].islower() or row.startswith("S ") for row in flags if row):
             raise Refusal("HIDDEN_INDEX_FLAGS: " + name)
-        dirty = git(directory, "status", "--porcelain=v1", "--untracked-files=all", "--ignored")
+        dirty = git(repository, "status", "--porcelain=v1", "--untracked-files=all", "--ignored", *scope)
         if dirty:
             raise Refusal("DEPENDENCY_DIRTY: " + name)
         selected[name] = (directory, expected)
@@ -69,6 +75,10 @@ def checked_layers(root):
         raise Refusal("SOURCE_MISSING: PoA/seam_audit.py")
     if not (selected["Person"][0] / "person_harness.py").is_file():
         raise Refusal("SOURCE_MISSING: Person/person_harness.py")
+    if not (selected["ProbeVI"][0] / "harness/probe_vi.py").is_file():
+        raise Refusal("SOURCE_MISSING: ProbeVI/harness/probe_vi.py")
+    if not (selected["DoubleFibre"][0] / "harness/double_fibre_audit.py").is_file():
+        raise Refusal("SOURCE_MISSING: DoubleFibre/harness/double_fibre_audit.py")
     return selected
 
 
@@ -92,6 +102,8 @@ def main(argv=None):
             command + [str(ROOT / "recomposition_stitch.py")],
             command + [str(ROOT / "severance_stitch.py"), "--teeth"],
             command + [str(ROOT / "person_stitch.py")],
+            command + [str(ROOT / "common_control_stitch.py")],
+            command + [str(ROOT / "double_fibre_stitch.py")],
         ]
         environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
         for child in commands:
@@ -106,3 +118,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

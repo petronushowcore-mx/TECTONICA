@@ -254,5 +254,113 @@ class PinnedSourcesTests(unittest.TestCase):
             self.assertEqual(tectonica.git(self.repo, "rev-parse", "HEAD"), self.commit, "S_REAL_GIT_SCRUB")
 
 
+class VendoredSourcesTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="vendored-fixture-")
+        self.addCleanup(temporary.cleanup)
+        self.repo = Path(temporary.name).resolve() / "project"
+        self.directory = self.repo / "layers/ProbeVI"
+        self.path = self.directory / "harness/probe_vi.py"
+        self.path.parent.mkdir(parents=True)
+        self.path.write_bytes(LITERAL)
+        # A different root-relative blob makes loss of the selected prefix visible.
+        decoy = self.repo / "harness/probe_vi.py"
+        decoy.parent.mkdir()
+        decoy.write_bytes(CHANGED)
+        (self.repo / "README.md").write_bytes(b"Root fixture\n")
+        fixture_git(self.repo, "init", "-q")
+        fixture_git(self.repo, "add", "--", "layers/ProbeVI", "harness", "README.md")
+        fixture_git(self.repo, "commit", "-qm", "benign included source fixture")
+        self.commit = fixture_git(self.repo, "rev-parse", "HEAD")
+        self.selected = {"ProbeVI": (self.directory, self.commit)}
+        self.name = "_vendored_fixture_" + self.repo.parent.name.replace("-", "_")
+        self.addCleanup(pinned._LOADED.pop, self.name, None)
+        self.addCleanup(sys.modules.pop, self.name, None)
+
+    def test_exact_prefix_and_crlf(self):
+        with patch.object(tectonica, "git_bytes", wraps=tectonica.git_bytes) as read:
+            try:
+                actual = pinned.read_pinned(self.selected, self.path)
+            except Exception as exc:
+                self.fail("S_VENDORED_PREFIX: " + str(exc))
+            self.assertEqual(actual, LITERAL, "S_VENDORED_EXACT")
+            read.assert_any_call(self.repo, "cat-file", "blob",
+                                 self.commit + ":layers/ProbeVI/harness/probe_vi.py")
+        self.path.write_bytes(b"VALUE = 17\r\n")
+        self.assertEqual(pinned.read_pinned(self.selected, self.path), b"VALUE = 17\r\n",
+                         "S_VENDORED_CRLF")
+        self.assertEqual(pinned._load(self.selected, self.name, self.path).VALUE, 17,
+                         "S_VENDORED_EXECUTES")
+
+    def test_changed_source_refused(self):
+        self.assertEqual(pinned.read_pinned(self.selected, self.path), LITERAL,
+                         "S_VENDORED_CONTENT_CONTROL")
+        self.path.write_bytes(CHANGED)
+        with patch.object(pinned, "compile", create=True, wraps=compile) as compiler:
+            with self.assertRaisesRegex(tectonica.Refusal, "^SOURCE_CONTENT_MISMATCH:"):
+                pinned._load(self.selected, self.name, self.path)
+            compiler.assert_not_called()
+        self.assertNotIn(self.name, sys.modules, "S_VENDORED_REFUSED_NO_MODULE")
+
+    def test_foreign_git_root_refused(self):
+        self.assertEqual(pinned.read_pinned(self.selected, self.path), LITERAL,
+                         "S_VENDORED_ROOT_CONTROL")
+        with patch.object(tectonica, "git", return_value=str(self.repo.parent)), \
+             patch.object(tectonica, "git_bytes") as read:
+            with self.assertRaisesRegex(tectonica.Refusal, "^SOURCE_ROOT_MISMATCH:"):
+                pinned.read_pinned(self.selected, self.path)
+            read.assert_not_called()
+
+    def test_selected_prefix_required(self):
+        with self.assertRaisesRegex(tectonica.Refusal, "^SOURCE_ROOT_MISMATCH:"):
+            pinned.read_pinned({"ProbeVI": (self.path.parent, self.commit)}, self.path)
+        with self.assertRaisesRegex(tectonica.Refusal, "^SOURCE_OUTSIDE_PINS:"):
+            pinned.read_pinned(self.selected, self.repo / "harness/probe_vi.py")
+        with self.assertRaisesRegex(tectonica.Refusal, "^SOURCE_ROOT_MISMATCH:"):
+            pinned.read_pinned({"XV": (self.directory, self.commit)}, self.path)
+
+    def test_root_changes_outside_source_do_not_change_pin(self):
+        (self.repo / "README.md").write_bytes(b"Other root change\n")
+        fixture_git(self.repo, "update-index", "--skip-worktree", "README.md")
+        self.assertEqual(pinned.read_pinned(self.selected, self.path), LITERAL,
+                         "S_VENDORED_ROOT_CHANGE_CONTROL")
+        self.assertEqual(fixture_git(self.repo, "rev-parse", "HEAD"), self.commit,
+                         "S_VENDORED_FIXED_COMMIT")
+
+    def test_captured_commit_and_same_buffer(self):
+        original = Path.read_bytes
+        reads = []
+        def read_then_change(path):
+            body = original(path)
+            if path.resolve() == self.path:
+                reads.append(body)
+                path.write_bytes(CHANGED)
+            return body
+        with patch.object(Path, "read_bytes", read_then_change):
+            module = pinned._load(self.selected, self.name, self.path)
+        self.assertEqual(module.VALUE, 17, "S_VENDORED_CAPTURED_BUFFER")
+        self.assertEqual(reads, [LITERAL], "S_VENDORED_SINGLE_READ")
+        fixture_git(self.repo, "add", "--", "layers/ProbeVI")
+        fixture_git(self.repo, "commit", "-qm", "second benign included source fixture")
+        with self.assertRaisesRegex(tectonica.Refusal, "^SOURCE_CONTENT_MISMATCH:"):
+            pinned.read_pinned(self.selected, self.path)
+        self.path.write_bytes(LITERAL)
+        self.assertEqual(pinned.read_pinned(self.selected, self.path), LITERAL,
+                         "S_VENDORED_CAPTURED_COMMIT")
+
+    def test_foreign_cache_refused(self):
+        with patch.dict(pinned._LOADED), patch.dict(sys.modules):
+            foreign = ModuleType(self.name)
+            foreign.__file__ = str(self.path)
+            foreign._xiv_stitch_source_sha256 = hashlib.sha256(LITERAL).hexdigest()
+            sys.modules[self.name] = foreign
+            with self.assertRaisesRegex(tectonica.Refusal, "^PINNED_MODULE_CONFLICT:"):
+                pinned._load(self.selected, self.name, self.path)
+            sys.modules.pop(self.name)
+            owned = pinned._load(self.selected, self.name, self.path)
+            self.assertIs(pinned._load(self.selected, self.name, self.path), owned,
+                          "S_VENDORED_OWNED_CACHE")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
